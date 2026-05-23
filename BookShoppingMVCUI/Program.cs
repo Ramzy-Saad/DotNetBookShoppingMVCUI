@@ -22,6 +22,8 @@ namespace BookShoppingMVCUI
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddTransient<IHomeRepository,HomeRepository>();
+
 
             var app = builder.Build();
             // run seeder

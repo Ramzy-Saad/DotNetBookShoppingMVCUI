@@ -7,10 +7,12 @@ namespace BookShoppingMVCUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository    )
         {
             _logger = logger;
+            _homeRepository = homeRepository;
         }
 
         public IActionResult Index()
