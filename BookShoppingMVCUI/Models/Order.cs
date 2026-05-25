@@ -8,7 +8,7 @@ namespace BookShoppingMVCUI.Models
     {
         public int Id { get; set; }
         [Required]
-        public int userId { get; set; }
+        public string UserId { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; } = false;
         [Required]

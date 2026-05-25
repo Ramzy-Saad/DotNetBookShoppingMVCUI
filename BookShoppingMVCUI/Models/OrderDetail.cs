@@ -13,6 +13,8 @@ namespace BookShoppingMVCUI.Models
         public int BookId { get; set; }
         [Required]
         public double UnitPrice{ get; set; }
+        [Required]
+        public int Quantity{ get; set; }
         public Book Book { get; set; }
         public Order Order { get; set; }
 
