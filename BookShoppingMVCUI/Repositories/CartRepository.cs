@@ -98,7 +98,6 @@ namespace BookShoppingMVCUI.Repositories
             }
         }
 
-
         public async Task<ShoppingCart> GetUserCart()
         {
             var userId = GetUserId();
