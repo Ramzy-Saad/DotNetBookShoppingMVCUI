@@ -49,11 +49,11 @@
     <script>
             loadCartCount()
             async function loadCartCount(){
-                console.log('new');
                 try{
-                    var response = await fetch(`Cart/GetTotalItemInCart`)
-                    if(response.success){
-                        var result  = await response.json();
+                    var response = await fetch(`/Cart/GetTotalItemInCart`)
+                    var result  = await response.json();
+                    if(result.success){
+                        console.log(result);
                         document.getElementById('cartCount').innerHTML  = result.cartCount;
                     }
                 }
