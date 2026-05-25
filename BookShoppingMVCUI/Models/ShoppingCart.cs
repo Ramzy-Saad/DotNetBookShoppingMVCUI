@@ -8,7 +8,9 @@ namespace BookShoppingMVCUI.Models
     {
         public int Id { get; set; }
         [Required]
-        public int userId { get; set; }
+        public string userId { get; set; }
         public bool IsDeleted { get; set; }= false;
+
+        public ICollection<CartDetail> CartDetails { get; set; }
     }
 }

@@ -21,8 +21,27 @@ namespace BookShoppingMVCUI
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    {
+                        context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    }
+
+                    context.Response.Redirect(context.RedirectUri);
+                    return Task.CompletedTask;
+                };
+            });
+
+
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<IHomeRepository,HomeRepository>();
+            builder.Services.AddTransient<ICartRepository,CartRepository>();
 
 
             var app = builder.Build();

@@ -1,43 +1,85 @@
-﻿@{
+﻿@model HomeDTO
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
 
 }
 
 <div class="my-4">
-    <form class="row row-cols-lg-auto g-3 align-items-center">
+    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
 
       <div class="col-12">
-        <label class="visually-hidden" for="Geners">Geners</label>
-            <select class="form-select" id="Geners">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <label class="visually-hidden" for="genreId">Geners</label>
+            <select class="form-select" id="genreId" name="genreId">
+                <option selected>Geners</option>
+                @foreach (var Genre in Model.Genres)
+                {
+                    <option selected="@(Genre.Id==Model.GenreId)" value="@Genre.Id" >@Genre.Name</option>
+                }
             </select>
       </div>
       <div class="col-12">
-            <label class="visually-hidden" for="Search-by-title">Search by title</label>
+            <label class="visually-hidden" for="sTerm">Search by title</label>
         <div class="input-group">
           <div class="input-group-text"></div>
-                <input type="text" class="form-control" id="Search-by-title" placeholder="Search by title">
+                <input type="text" class="form-control" id="sTerm" name="sTerm" value="@Model.Sterm" placeholder="Search by title">
         </div>
       </div>
 
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Search</button>
+        <a href="/" class="btn btn-dark">Reset</a>
       </div>
     </form>
 </div>
-<div class="w-100 d-flex flex-wrap mt-4">
-    <div class="card mx-2 mb-4" style="width: 16rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Book title</h5>
-            <p class="card-text">
-                Genre:
-                Author:
-                Price:
-            </p>
-            <a href="#" class="btn btn-primary">Add to cart</a>
+<div class="w-100 d-flex flex-wrap mt-4 justify-content-center gap-2">
+    @foreach (var book in Model.Books)
+    {
+        <div class="card  mb-4 col-2">
+            @if (string.IsNullOrEmpty(book.Image))
+            {
+                <img style="object-fit: cover;" src="/images/No_Image_Available.jpg" class="card-img-top" alt="...">
+            }
+            else
+            {
+                <img style="object-fit: cover;" src="/images/@book.Image" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@book.Name</h5>
+                <p class="card-text">
+                    <b>Genre:</b> @book.GenreName <br/>
+                    <b>Author:</b> @book.AuthorName <br />
+                    <b>Price:</b> @book.Price
+                </p>
+                <button type="button" onclick="addToCart(@book.Id)" class="btn btn-primary">Add to cart</button>
+            </div>
         </div>
-    </div>
+    }
+
 </div>
+
+@section Scripts{
+    <script>
+        async function addToCart(bookId){
+            try{
+                var response = await fetch(`/Cart/AddItem?bookId=${bookId}`,{
+                    headers:{
+                        "X-Requested-With":"XMLHttpRequest"
+                    }
+                });
+                if(response.status === 401){
+                    window.location.href = "/Identity/Account/Login";
+                    return;
+                }
+                var result  = await response.json();
+                if(result.success){
+                    document.getElementById('cartCount').innerHTML = result.cartCount;
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+    </script>
+
+}

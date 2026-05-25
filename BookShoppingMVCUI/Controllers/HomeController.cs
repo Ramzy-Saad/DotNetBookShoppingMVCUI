@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using BookShoppingMVCUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShoppingMVCUI.Controllers
@@ -15,9 +14,18 @@ namespace BookShoppingMVCUI.Controllers
             _homeRepository = homeRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sterm="", int genreId=0)
         {
-            return View();
+            IEnumerable<Book> books = await _homeRepository.DisplayBooks( sterm , genreId);
+            IEnumerable<Genre> genres = await _homeRepository.Genres();
+            HomeDTO homeDTO = new HomeDTO()
+            {
+                Books = books,
+                Genres = genres,
+                Sterm = sterm,
+                GenreId = genreId
+            };
+            return View(homeDTO);
         }
 
         public IActionResult Privacy()

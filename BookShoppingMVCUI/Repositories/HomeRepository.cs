@@ -34,5 +34,10 @@ namespace BookShoppingMVCUI.Repositories
             }
             return books;
         }
+    
+        public async Task<IEnumerable<Genre>> Genres()
+        {
+            return await _dbContext.Genres.ToListAsync();
+        }
     }
 }
