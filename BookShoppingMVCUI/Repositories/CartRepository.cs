@@ -127,6 +127,7 @@ namespace BookShoppingMVCUI.Repositories
             var data = await (from cart in _dbContext.ShoppingCarts
                               join CartDetail in _dbContext.CartDetails
                               on cart.Id equals CartDetail.ShoppingCartId
+                              where cart.userId==userId
                               select new { CartDetail.Id }
                              ).ToListAsync();
             return data.Count;
