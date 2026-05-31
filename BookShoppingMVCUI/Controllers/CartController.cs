@@ -68,12 +68,27 @@ namespace BookShoppingMVCUI.Controllers
                 cartCount = cartItem
             });
         }
-        public async Task<IActionResult> CheckOut()
+        public IActionResult CheckOut()
         {
-            bool isCheckedOut = await _cartRepository.DoCheckOut();
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(CheckoutModel checkoutModel)
+        {
+            if (!ModelState.IsValid)
+                return View(checkoutModel);
+            bool isCheckedOut = await _cartRepository.DoCheckOut(checkoutModel);
             if (!isCheckedOut)
-                throw new Exception("Error in checkingOut.");
-            return RedirectToAction("index", "Home");
+                return RedirectToAction("OrderFailure");
+            return RedirectToAction("OrderSuccess");
+        }
+        public IActionResult OrderSuccess()
+        {
+            return View();
+        }
+        public IActionResult OrderFailure()
+        {
+            return View();
         }
     }
 }

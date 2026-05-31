@@ -1,0 +1,45 @@
+﻿@model CheckoutModel
+@{
+    ViewData["Title"] = "CheckOut";
+    var paymentItems = Enum.GetValues(typeof(BookShoppingMVCUI.Constants.PaymentMethods))
+                           .Cast<BookShoppingMVCUI.Constants.PaymentMethods>()
+                           .Select(p => new SelectListItem(p.ToString(), p.ToString()));
+}
+<h2>CheckOut</h2>
+<form asp-action="Checkout">
+    <div class="py-2 row">
+        <div class="form-group w-50">
+            <label asp-for="Name">Name*</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group w-50">
+            <label asp-for="Email">Email*</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group w-50">
+            <label asp-for="MobileNumber">MobileNumber*</label>
+            <input asp-for="MobileNumber" class="form-control" />
+            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group w-50">
+            <label asp-for="PaymentMethod">PaymentMethods*</label>
+            <select asp-for="PaymentMethod" class="form-control" asp-items="@(paymentItems)">
+                <option value="">-- Select Payment Method --</option>
+			</select>
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
+        <div class="form-group w-50">
+            <label asp-for="Address">Address*</label>
+			<textarea asp-for="Address" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="py-2">
+	    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+

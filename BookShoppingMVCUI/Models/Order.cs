@@ -13,6 +13,19 @@ namespace BookShoppingMVCUI.Models
         public bool IsDeleted { get; set; } = false;
         [Required]
         public int OrderStatusId { get; set; }
+        [Required]
+        public string? Name { get; set; }
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+        [Required]
+        public string? MobileNumber { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string? Address { get; set; }
+        [Required]
+        public string? PaymentMethod { get; set; }
+        public bool IsPaid { get; set; }
         public OrderStatus OrderStatus { get; set; }
 
         public List<OrderDetail> OrderDetail { get; set; }
