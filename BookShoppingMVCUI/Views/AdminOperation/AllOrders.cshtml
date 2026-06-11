@@ -32,13 +32,16 @@
 					<td class="text-nowrap">@order.PaymentMethod | @(order.IsPaid ? "Paid" : "Not Paid")</td>
 					<td>@order.OrderStatus.Name</td>
 					<td>
-						<button class="btn btn-sm btn-primary" >Order Details</button>
+						<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-@order.Id">Order Details</button>
 						
 						<a asp-action="UpdatePaymentStatus" asp-route-orderId="@order.Id"
 						class="btn btn-sm btn-info" >Change Order STatus</a>
 						
 						<a asp-action="TogglePaymentStatus" asp-route-orderId="@order.Id"
 						class="btn btn-sm btn-info" >Toggle Payment Status</a>
+
+						@await Html.PartialAsync("/Views/AdminOperation/_OrderDetailModal.cshtml",
+						new OrderDetailModalDTO { DivID = order.Id.ToString(), OrderDetail = order.OrderDetail })
 
 					</td>
 				</tr>
