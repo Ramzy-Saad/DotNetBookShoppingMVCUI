@@ -18,7 +18,7 @@ namespace BookShoppingMVCUI.Repositories
 
         public async Task ChangeOrderStatus(UpdateOrderStatusModel model)
         {
-            var order = await _dbContext.Orders.FindAsync(model.orderId);
+            var order = await _dbContext.Orders.FindAsync(model.OrderId);
             if(order == null)
             {
                 throw new Exception("Order not found.");

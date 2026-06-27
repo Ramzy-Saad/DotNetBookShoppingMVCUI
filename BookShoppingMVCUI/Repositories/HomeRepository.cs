@@ -16,17 +16,23 @@ namespace BookShoppingMVCUI.Repositories
             IEnumerable<Book> books =  await (from book in _dbContext.Books
                           join Genre in _dbContext.Genres
                           on book.GenreId equals Genre.Id
+                          join Stock in _dbContext.Stocks
+                          on book.Id equals Stock.BookId
+                          into book_stocks
+                          from bookWithSTock in book_stocks.DefaultIfEmpty()
                           where string.IsNullOrWhiteSpace(sTerm) || (book!=null && book.Name.ToLower().StartsWith(sTerm))
-                          select new Book
-                          {
-                              Id = book.Id,
-                              Name = book.Name,
-                              Image = book.Image,
-                              AuthorName = book.AuthorName,
-                              GenreId = book.GenreId,
-                              GenreName = Genre.Name,
-                              Price = book.Price,
-                          }
+                          select 
+                            new Book
+                            {
+                                Id = book.Id,
+                                Name = book.Name,
+                                Image = book.Image,
+                                AuthorName = book.AuthorName,
+                                GenreId = book.GenreId,
+                                GenreName = Genre.Name,
+                                Price = book.Price,
+                                Stock = bookWithSTock 
+                            }
                           ).ToListAsync();
             if (genreId>0)
             {

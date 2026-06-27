@@ -33,7 +33,7 @@ namespace BookShoppingMVCUI.Controllers
             return RedirectToAction(nameof(AllOrders));
         }
 
-        public async Task<IActionResult> UpdatePaymentStatus(int orderId)
+        public async Task<IActionResult> UpdateOrderStatus(int orderId)
         {
             var order = await _userOrderRepository.GetOrderById(orderId);
             if (order == null)
@@ -52,14 +52,14 @@ namespace BookShoppingMVCUI.Controllers
             );
             var data = new UpdateOrderStatusModel
             {
-                orderId = orderId,
+                OrderId = orderId,
                 OrderStatusId = order.OrderStatusId,
                 OrderStatusList = orderStatusList
             };
             return View(data);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdatePaymentStatus(UpdateOrderStatusModel data)
+        public async Task<IActionResult> UpdateOrderStatus(UpdateOrderStatusModel data)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace BookShoppingMVCUI.Controllers
             {
                 TempData["msg"] = $"An error occurred while updating order status: {ex.Message}";
             }   
-            return RedirectToAction(nameof(UpdatePaymentStatus),new {orderId = data.orderId });
+            return RedirectToAction(nameof(UpdateOrderStatus),new {orderId = data.OrderId });
         }
 
     }

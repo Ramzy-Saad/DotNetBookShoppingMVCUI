@@ -49,9 +49,20 @@
                 <p class="card-text">
                     <b>Genre:</b> @book.GenreName <br/>
                     <b>Author:</b> @book.AuthorName <br />
-                    <b>Price:</b> @book.Price
+                    <b>Price:</b> @book.Price<br/>
+                    <b>Quantity:</b> @book.Stock?.Quantity
+
                 </p>
-                <button type="button" onclick="addToCart(@book.Id)" class="btn btn-primary">Add to cart</button>
+                @if (@book.Stock?.Quantity > 0)
+                {
+                    <button type="button" onclick="addToCart(@book.Id)" class="btn btn-primary">Add to cart</button>
+                }
+                else
+                {
+                    <span class="border border-danger text-danger rounded px-2 py-1">
+                        Out of stock
+                    </span>
+                }
             </div>
         </div>
     }

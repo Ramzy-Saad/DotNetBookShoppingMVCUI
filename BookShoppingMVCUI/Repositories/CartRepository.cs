@@ -24,7 +24,7 @@ namespace BookShoppingMVCUI.Repositories
                 string userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
                 {
-                    throw new Exception("User is not logged in.");
+                    throw new UnauthorizedAccessException("User is not logged in.");
                 }
                 var cart = await GetCart(userId);
                 if (cart is null)
@@ -68,17 +68,17 @@ namespace BookShoppingMVCUI.Repositories
                 string userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
                 {
-                    throw new Exception("User is not logged in.");
+                    throw new UnauthorizedAccessException("User is not logged in.");
                 }
                 var cart = await GetCart(userId);
                 if (cart is null)
                 {
-                    throw new Exception("Empty Cart.");
+                    throw new InvalidOperationException("Empty Cart.");
                 }
                 var cartItem = await _dbContext.CartDetails.FirstOrDefaultAsync(c => c.ShoppingCartId == cart.Id && c.BookId == bookId);
                 if (cartItem is null)
                 {
-                    throw new Exception("Empty Cart Items.");
+                    throw new InvalidOperationException("Empty Cart Items.");
                 }
                 else if (cartItem.Quantity==1)
                 {
@@ -102,9 +102,12 @@ namespace BookShoppingMVCUI.Repositories
         {
             var userId = GetUserId();
             if (userId == null) {
-                throw new Exception("Ivalid userId");
+                throw new InvalidOperationException("Ivalid userId");
             }
             var shopingCart = await _dbContext.ShoppingCarts
+                    .Include(a=>a.CartDetails)
+                    .ThenInclude(a=>a.Book)
+                    .ThenInclude(a=>a.Stock)
                     .Include(a=>a.CartDetails)
                     .ThenInclude(a=>a.Book)
                     .ThenInclude(a=>a.Genre)
@@ -139,18 +142,18 @@ namespace BookShoppingMVCUI.Repositories
             {
                 var userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
-                    throw new Exception("User is not logged in.");
+                    throw new UnauthorizedAccessException("User is not logged in.");
                 var cart = await GetCart(userId);
                 if (cart is null)
-                    throw new Exception("Invalid cart");
+                    throw new InvalidOperationException("Invalid cart");
                 var cartDetail = _dbContext.CartDetails
                     .Include(c => c.Book)
                     .Where(c => c.ShoppingCartId == cart.Id).ToList();
                 if(cartDetail.Count == 0)
-                    throw new Exception("Empty cart");
+                    throw new InvalidOperationException("Empty cart");
                 var pendingRecord = _dbContext.orderStatuses.FirstOrDefault(s=>s.Name=="Pending");
                 if (pendingRecord is null)
-                    throw new Exception("Wrong on order status.");
+                    throw new InvalidOperationException("Wrong on order status.");
                 // Creating New Order
                 var order = new Order()
                 {
@@ -176,6 +179,18 @@ namespace BookShoppingMVCUI.Repositories
                         UnitPrice = item.Book.Price
                     };
                     _dbContext.OrderDetails.Add(orderDetail);
+
+                    // stock check
+                    var stock = await _dbContext.Stocks.FirstOrDefaultAsync(s => s.BookId==item.BookId);
+                    if(stock is null)
+                    {
+                        throw new InvalidOperationException("Stock is null");
+                    }
+                    if (item.Quantity > stock.Quantity)
+                    {
+                        throw new InvalidOperationException($"Only {stock.Quantity} items(s) are available in the stock.");
+                    }
+                    stock.Quantity -= item.Quantity;
                 }
                 _dbContext.SaveChanges();
 

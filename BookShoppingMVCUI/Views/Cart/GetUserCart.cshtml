@@ -40,7 +40,15 @@
                         <td>@item.Book.Price X @item.Quantity</td>
                         <td>@(item.Book.Price * @item.Quantity)</td>
                         <td>
-                            <a class="btn btn-info" href="/Cart/AddItem?bookId=@item.BookId&&redirect=1">+</a>
+                            @if(item.Quantity < item.Book.Stock.Quantity){
+                                <a class="btn btn-info" href="/Cart/AddItem?bookId=@item.BookId&&redirect=1">+</a>
+                            }
+                            else
+                            {
+                                <span class="border border-danger text-danger rounded px-2 py-1">
+                                    Out of stock
+                                </span>
+                            }
                             <a class="btn btn-info" href="/Cart/removeItem?bookId=@item.BookId">-</a>
                         </td>
                     </tr>

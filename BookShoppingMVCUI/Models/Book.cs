@@ -26,5 +26,7 @@ namespace BookShoppingMVCUI.Models
 
         [NotMapped]
         public string GenreName{ get; set; }
+
+        public Stock Stock { get; set; }
     }
 }
