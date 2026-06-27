@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Genre>
+
+<h2>Genres</h2>
+
+<a asp-action="AddGenre" asp-controller="Genre" class="btn btn-primary">Add</a>
+
+<table class="table table-striped my-2">
+	<tr>
+		<th>Genre</th>
+		<th>Action</th>
+	</tr>
+	@foreach (var gener in Model)
+	{
+		<tr>
+			<td>@gener.Name</td>
+			<td>
+				<a asp-action="UpdateGenre" asp-controller="Genre" asp-route-id="@gener.Id"
+				class="btn btn-success">Edit</a>
+				<a asp-action="DeleteGenre" asp-controller="Genre" asp-route-id="@gener.Id"
+				   class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+			</td>
+		</tr>
+	}
+
+</table>

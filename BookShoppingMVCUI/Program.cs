@@ -44,14 +44,15 @@ namespace BookShoppingMVCUI
             builder.Services.AddTransient<ICartRepository,CartRepository>();
             builder.Services.AddTransient<IUserOrderRepository,UserOrderRepository>();
             builder.Services.AddTransient<IStockRepository,StockRepository>();
+            builder.Services.AddTransient<IGenreRepository,GenreRepository>();
 
 
             var app = builder.Build();
             // run seeder
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    await DbSeeder.SeedDefaultData(scope.ServiceProvider);
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                await DbSeeder.SeedDefaultData(scope.ServiceProvider);
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
