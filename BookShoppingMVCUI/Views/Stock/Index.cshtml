@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<StockDisplayModel>
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Stocks";
 }
 
 <h2>Stocks</h2>
 <form asp-action="Index" method="get" class="my-2 d-flex gap-2">
-    <input type="text" name="sTerm" class="form-control w-25" placeholder="Search by book" />
+    <input type="text" name="sTerm" value="@Context.Request.Query["sTerm"]" class="form-control w-25" placeholder="Search by book" />
     <button type="submit" class="btn btn-primary">Find</button>
     <a asp-action="Index" asp-controller="Stock" class="btn btn-primary">Clear</a>
 </form>

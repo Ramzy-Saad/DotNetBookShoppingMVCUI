@@ -35,7 +35,7 @@
 <div class="w-100 d-flex flex-wrap mt-4 justify-content-center gap-2">
     @foreach (var book in Model.Books)
     {
-        <div class="card  mb-4 col-2">
+        <div class="card  mb-4 col-xl-2 col-3">
             @if (string.IsNullOrEmpty(book.Image))
             {
                 <img style="object-fit: cover;" src="/images/No_Image_Available.jpg" class="card-img-top" alt="...">

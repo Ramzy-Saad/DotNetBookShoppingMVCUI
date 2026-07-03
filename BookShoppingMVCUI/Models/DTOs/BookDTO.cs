@@ -18,6 +18,7 @@ namespace BookShoppingMVCUI.Models.DTOs
 
         [Required]
         public int GenreId { get; set; }
+        public int Quantity { get; set; }
         public IFormFile? ImageFile { get; set; }
         public IEnumerable<SelectListItem>? GenreList { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookShoppingMVCUI.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShoppingMVCUI.Repositories
 {

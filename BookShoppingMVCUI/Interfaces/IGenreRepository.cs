@@ -1,4 +1,4 @@
-﻿namespace BookShoppingMVCUI.Repositories
+﻿namespace BookShoppingMVCUI.Interfaces
 {
     public interface IGenreRepository
     {

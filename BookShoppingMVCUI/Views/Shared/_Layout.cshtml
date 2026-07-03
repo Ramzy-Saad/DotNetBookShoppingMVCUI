@@ -26,19 +26,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home/privacy">Privacy</a>
                     </li>
-                    @if (User.IsInRole(Roles.Admin.ToString()))
+                   @if (User.IsInRole(Roles.Admin.ToString()))
                     {
                         <li class="nav-item">
+                            <a class="nav-link" href="/AdminOperation/Dashboard">Dashboard</a>
+                        </li>
+                       @*   <li class="nav-item">
                             <a class="nav-link" href="/AdminOperation/AllOrders">Orders</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Stock/Index">Stock</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Genre/Index">Genre</a>
+                            <a class="nav-link" href="/Genre/Index">Genres</a>
                         </li>
-
-                    }
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Book/Index">Books</a>
+                        </li>
+*@
+                    } 
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>

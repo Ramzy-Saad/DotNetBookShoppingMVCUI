@@ -1,4 +1,6 @@
 using BookShoppingMVCUI.Data;
+using BookShoppingMVCUI.Interfaces;
+using BookShoppingMVCUI.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -45,6 +47,8 @@ namespace BookShoppingMVCUI
             builder.Services.AddTransient<IUserOrderRepository,UserOrderRepository>();
             builder.Services.AddTransient<IStockRepository,StockRepository>();
             builder.Services.AddTransient<IGenreRepository,GenreRepository>();
+            builder.Services.AddTransient<IFileService,FileService>();
+            builder.Services.AddTransient<IBookRepository,BookRepository>();
 
 
             var app = builder.Build();

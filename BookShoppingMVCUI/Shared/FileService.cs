@@ -1,10 +1,7 @@
-﻿namespace BookShoppingMVCUI.Shared
+﻿using BookShoppingMVCUI.Interfaces;
+
+namespace BookShoppingMVCUI.Shared
 {
-    public interface IFileService
-    {
-        void DeleteFile(string fileName);
-        Task<string> SaveImage(IFormFile file, string[] allowedExtensions);
-    }
     public class FileService : IFileService
     {
         private readonly IWebHostEnvironment _environment;
@@ -34,10 +31,10 @@
             return fileName;
         }
 
-        public void DeleteFile(string fileName)
+        public void DeleteImage(string fileName)
         {
             var wwwPath = _environment.WebRootPath;
-            var fileNameWithPath = Path.Combine(wwwPath, fileName);
+            var fileNameWithPath = Path.Combine(wwwPath,"images\\", fileName);
             if (! File.Exists(fileNameWithPath))
             {
                 throw new FileNotFoundException(fileName);

@@ -1,4 +1,5 @@
 ﻿using BookShoppingMVCUI.Constants;
+using BookShoppingMVCUI.Interfaces;
 using BookShoppingMVCUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -86,6 +87,11 @@ namespace BookShoppingMVCUI.Controllers
                 TempData["msg"] = $"An error occurred while updating order status: {ex.Message}";
             }   
             return RedirectToAction(nameof(UpdateOrderStatus),new {orderId = data.OrderId });
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
         }
 
     }
