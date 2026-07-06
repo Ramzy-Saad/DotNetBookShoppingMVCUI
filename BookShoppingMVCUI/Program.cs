@@ -18,6 +18,9 @@ namespace BookShoppingMVCUI
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var cs = builder.Configuration.GetConnectionString("DefaultConnection");
+            Console.WriteLine("Ramzy");
+            Console.WriteLine(cs);
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
