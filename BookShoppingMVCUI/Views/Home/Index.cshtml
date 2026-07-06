@@ -85,6 +85,15 @@
                 var result  = await response.json();
                 if(result.success){
                     document.getElementById('cartCount').innerHTML = result.cartCount;
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Book added!`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
                 }
             }
             catch(err){

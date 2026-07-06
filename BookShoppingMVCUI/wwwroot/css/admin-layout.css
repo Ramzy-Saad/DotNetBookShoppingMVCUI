@@ -88,3 +88,13 @@
 .content {
     padding: 20px;
 }
+
+.navigation-link.active {
+    background: #4f6785;
+    color: #fff;
+    font-weight: 600;
+}
+
+    .navigation-link.active i {
+        color: #fff;
+    }

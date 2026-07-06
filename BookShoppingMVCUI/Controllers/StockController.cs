@@ -39,7 +39,7 @@ namespace BookShoppingMVCUI.Controllers
                 await _stockRepository.ManageStock(stock);
                 TempData["successMessage"] = "Stock is updated successfully.";
             }
-            catch (Exception ex) { 
+            catch (Exception) { 
                 TempData["errorMessage"] = "Something went wrong!";
             }
             return RedirectToAction(nameof(Index));

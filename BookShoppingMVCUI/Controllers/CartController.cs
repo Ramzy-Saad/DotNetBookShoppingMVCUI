@@ -27,7 +27,7 @@ namespace BookShoppingMVCUI.Controllers
                         cartCount = cartCount
                     });
                 }
-
+                TempData["successMessage"] = "Cart updated successfully.";
                 return RedirectToAction("GetUserCart");
             }
             catch (Exception ex)
@@ -44,6 +44,7 @@ namespace BookShoppingMVCUI.Controllers
             try
             {
                 var cartCount =  await _cartRepository.RemoveItem(bookId);
+                TempData["successMessage"] = "Cart updated successfully.";
                 return RedirectToAction("GetUserCart");
             }
             catch (Exception ex)

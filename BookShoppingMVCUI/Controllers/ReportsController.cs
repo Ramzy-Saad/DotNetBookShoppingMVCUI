@@ -24,7 +24,7 @@ namespace BookShoppingMVCUI.Controllers
                 var vm= new TopNSoldBooksVm(startDate, endDate, topFiveSoldBooks);
                 return View(vm);
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 TempData["ErrorMessage"] = "An error occurred while processing your request.";
                 return RedirectToAction("Index", "Home");

@@ -1,9 +1,12 @@
 using BookShoppingMVCUI.Data;
 using BookShoppingMVCUI.Interfaces;
+using BookShoppingMVCUI.Settings;
 using BookShoppingMVCUI.Shared;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace BookShoppingMVCUI
 {
@@ -23,7 +26,6 @@ namespace BookShoppingMVCUI
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.Events.OnRedirectToLogin = context =>
@@ -38,6 +40,14 @@ namespace BookShoppingMVCUI
                     return Task.CompletedTask;
                 };
             });
+            builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+                    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+                });
+
 
 
 
@@ -51,8 +61,15 @@ namespace BookShoppingMVCUI
             builder.Services.AddTransient<IBookRepository,BookRepository>();
             builder.Services.AddTransient<IReportRepository,ReportRepository>();
 
+            builder.Services.Configure<EmailSettings>(
+            builder.Configuration.GetSection("EmailSettings"));
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
 
             var app = builder.Build();
+
             // run seeder
             using (var scope = app.Services.CreateScope())
             {
