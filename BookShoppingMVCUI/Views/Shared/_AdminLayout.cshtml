@@ -28,7 +28,7 @@
             </a>
 
             <a asp-controller="AdminOperation" asp-action="AllOrders"
-               class="navigation-link @(controller == "AdminOperation" ? "active" : "")">
+               class="navigation-link @(controller == "AdminOperation" && action == "AllOrders" ? "active" : "")">
                 <i class="bi bi-receipt"></i> Orders
             </a>
 

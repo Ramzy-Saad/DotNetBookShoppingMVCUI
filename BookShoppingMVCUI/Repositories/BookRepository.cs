@@ -33,7 +33,7 @@ namespace BookShoppingMVCUI.Repositories
 
         public async Task<Book?> GetBookById(int id)
         {
-            return await _dbContext.Books.FindAsync(id);
+            return await _dbContext.Books.Include(b => b.Stock).FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<IEnumerable<Book>> getBooks()
